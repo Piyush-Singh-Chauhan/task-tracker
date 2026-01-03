@@ -36,8 +36,6 @@ export const sendOTP = async (email, otp) => {
   try {
     const transporter = createTransporter();
 
-    await transporter.verify();
-
     let fromEmail = process.env.SMTP_FROM || process.env.SMTP_USER;
     if (fromEmail && !fromEmail.includes('<')) {
       fromEmail = `TaskManager <${process.env.SMTP_USER}>`;
