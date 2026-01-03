@@ -2,7 +2,7 @@ import express from 'express';
 import { z } from 'zod';
 import { register, verifyCode, resendCode, login, forgotPassword, resendForgotPasswordOTP, verifyForgotPasswordOTP, resetPassword } from '../controllers/authController.js';
 import { validate } from '../middleware/validate.js';
-import { authRateLimiter } from '../middleware/rateLimiter.js';
+// import { authRateLimiter } from '../middleware/rateLimiter.js'
 
 const router = express.Router();
 
@@ -63,12 +63,12 @@ const resetPasswordSchema = z.object({
   }),
 });
 
-router.post('/register', authRateLimiter, validate(registerSchema), register);
+router.post('/register',  validate(registerSchema), register);
 router.post('/verify-otp', validate(verifyOTPSchema), verifyCode);
 router.post('/resend-otp',  validate(resendOTPSchema), resendCode);
-router.post('/login', authRateLimiter, validate(loginSchema), login);
-router.post('/forgot-password', authRateLimiter, validate(forgotPasswordSchema), forgotPassword);
-router.post('/resend-forgot-password-otp', authRateLimiter, validate(forgotPasswordSchema), resendForgotPasswordOTP);
+router.post('/login', validate(loginSchema), login);
+router.post('/forgot-password',  validate(forgotPasswordSchema), forgotPassword);
+router.post('/resend-forgot-password-otp',  validate(forgotPasswordSchema), resendForgotPasswordOTP);
 router.post('/verify-forgot-password-otp', validate(verifyForgotPasswordOTPSchema), verifyForgotPasswordOTP);
 router.post('/reset-password', validate(resetPasswordSchema), resetPassword);
 
