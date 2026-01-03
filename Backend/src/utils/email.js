@@ -76,6 +76,11 @@ export const sendOTP = async (email, otp) => {
     return { success: true, messageId: info.messageId };
   } catch (error) {
     console.error('Error sending email:', error.message);
+    console.error("Full SMtp error: ", error);
+    return res.status(500).json({
+      message:error.message,
+      code: error.code,
+    })
     
     if (error.message.includes('SMTP credentials not configured')) {
       throw new Error('Email service not configured. Please contact administrator.');
